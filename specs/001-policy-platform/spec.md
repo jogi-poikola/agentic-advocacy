@@ -14,10 +14,10 @@
    � Actions: input collection, position drafting, review, publication
    � Data: input documents, positions, advocacy plans
    � Constraints: GDPR, accessibility, volunteer resources
-3. For each unclear aspect:
-   � [NEEDS CLARIFICATION: authentication method for internal workspace]
-   � [NEEDS CLARIFICATION: specific file size limits for uploads]
-   � [NEEDS CLARIFICATION: data retention periods for input documents]
+3. Clarified requirements:
+   → Authentication: shared password (extensible)
+   → File uploads: 20MB maximum size
+   → Data retention: indefinite with no-personal-info policy
 4. Fill User Scenarios & Testing section
    � Primary flow: stakeholder submits input � AI creates draft � curator reviews � published
 5. Generate Functional Requirements
