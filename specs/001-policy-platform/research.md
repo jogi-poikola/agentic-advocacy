@@ -105,23 +105,32 @@
 - Plan migration path to individual accounts
 
 ### 6. Styling and UI Framework
-**Decision**: Tailwind CSS with custom components
+**Decision**: Tailwind CSS with Tietopolitiikka.fi design system integration
 **Rationale**:
 - Utility-first approach good for beginners
 - Excellent Next.js integration
 - Fast development and consistent design
 - Small production bundle with purging
+- Perfect foundation for implementing design tokens
+
+**Design System Requirements**:
+- **Colors**: Primary Yellow (#ffde59), Purple (#5e17eb), Dark Gray (#383838)
+- **Typography**: Unica One (headers), Lato (body text)
+- **Accessibility**: WCAG AA compliance with 4.5:1 contrast ratios
+- **Principles**: Collaborative, happy, trustworthy, minimal & modern
+- **Language**: Finnish-first with formal, neutral tone
 
 **Alternatives Considered**:
 - CSS modules: Rejected for beginner complexity
 - Styled-components: Rejected for runtime overhead
-- Bootstrap: Rejected for larger bundle size
+- Bootstrap: Rejected for larger bundle size and design constraints
 
 **Best Practices**:
-- Create reusable component library
-- Use Tailwind's design system principles
-- Implement responsive design from start
-- Consider accessibility in color and spacing choices
+- Implement design tokens as Tailwind custom configuration
+- Create component library matching Tietopolitiikka.fi visual identity
+- Use accessibility-first responsive design (mobile: 0-640px, tablet: 641-1024px, desktop: 1025px+)
+- Apply spacing scale (4/8/16/24/32/48px) consistently
+- Ensure collaborative design principles in every UI element
 
 ### 7. Google Docs Integration
 **Decision**: Google Drive API for file access and optional editing

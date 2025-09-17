@@ -1,7 +1,7 @@
 # Claude Code Context: AI-Powered Policy Platform
 
 **Project**: Agentic Advocacy Platform for Tietopolitiikka.fi
-**Tech Stack**: Next.js 14+ with TypeScript, Tailwind CSS, Claude API
+**Tech Stack**: Next.js 14+ with TypeScript, Tailwind CSS + Tietopolitiikka.fi Design System, Claude API
 **Architecture**: Static site generation with file-based storage
 **Target**: 1-month MVP for Finnish policy advocacy organization
 
@@ -28,7 +28,36 @@ Building an AI-powered platform that transforms policy advocacy from manual docu
   "next-auth": "^4.24.0",
   "tailwindcss": "^3.4.0",
   "fuse.js": "^7.0.0",
-  "gray-matter": "^4.0.3"
+  "gray-matter": "^4.0.3",
+  "@next/font": "^14.0.0"
+}
+```
+
+### Design System Integration
+```json
+{
+  "colors": {
+    "primary": {
+      "yellow": "#ffde59",
+      "purple": "#5e17eb",
+      "gray-dark": "#383838"
+    },
+    "neutral": {
+      "white": "#ffffff",
+      "gray-light": "#f5f5f5",
+      "gray-medium": "#cccccc"
+    }
+  },
+  "typography": {
+    "heading": "Unica One",
+    "body": "Lato"
+  },
+  "spacing": [4, 8, 16, 24, 32, 48],
+  "breakpoints": {
+    "mobile": "0-640px",
+    "tablet": "641-1024px",
+    "desktop": "1025px+"
+  }
 }
 ```
 
@@ -149,6 +178,7 @@ gdpr_compliant: true
 - Defined data models and API contracts
 - Established Next.js + Claude API architecture
 - Generated implementation plan and quickstart guide
+- Integrated Tietopolitiikka.fi design system
 
 ### Key Decisions Made
 1. **File-based storage**: Chose Markdown + Git over database for simplicity
@@ -156,6 +186,14 @@ gdpr_compliant: true
 3. **Claude API direct**: No AI framework wrapper for MVP
 4. **Shared password auth**: Simple MVP authentication with extensible design
 5. **Client-side search**: Fuse.js for performance and offline capability
+6. **Design system**: Tietopolitiikka.fi visual identity with accessibility-first approach
+
+### Design Principles Applied
+- **Collaborative**: Every element invites participation and transparency
+- **Happy**: Light, open layouts with bright yellow accent for positivity
+- **Trustworthy**: Typography and spacing reinforce credibility
+- **Minimal & Modern**: Avoid clutter, prioritize clarity and whitespace
+- **Accessibility-first**: WCAG AA compliance in all design decisions
 
 ## Environment Configuration
 

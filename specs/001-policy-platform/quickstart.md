@@ -159,6 +159,45 @@
 - ✅ Highlights show matched terms
 - ✅ Filters work correctly
 
+### Test 7: Design System Validation
+**Objective**: Verify Tietopolitiikka.fi design system implementation
+
+**Visual Tests**:
+1. **Color Usage**:
+   - Primary yellow (#ffde59) used for highlights and CTAs
+   - Primary purple (#5e17eb) used for headers and interactive elements
+   - Dark gray (#383838) used for body text
+   - White/gray neutrals for backgrounds
+
+2. **Typography**:
+   - Headers use "Unica One" font
+   - Body text uses "Lato" font
+   - Font sizes: H1 32px, H2 24px, Body 16px minimum
+
+3. **Layout & Spacing**:
+   - Consistent spacing scale (4, 8, 16, 24, 32, 48px)
+   - Responsive breakpoints (mobile: 0-640px, tablet: 641-1024px, desktop: 1025px+)
+   - Generous whitespace and minimal clutter
+
+4. **Component Design**:
+   - Position cards with proper color coding
+   - Tag pills in yellow with readable contrast
+   - Search interface prominence
+   - Finnish-first content with formal tone
+
+**Accessibility Tests**:
+1. **Color Contrast**: Use browser dev tools to verify 4.5:1 minimum ratio
+2. **Font Scaling**: Test at 200% zoom, ensure readability
+3. **Keyboard Navigation**: Tab through all interactive elements
+4. **Screen Reader**: Test with VoiceOver/NVDA for alt text and labels
+
+**Expected Results**:
+- ✅ All colors match Tietopolitiikka.fi brand guidelines
+- ✅ Typography hierarchy clear and consistent
+- ✅ Responsive design works across all breakpoints
+- ✅ WCAG AA compliance verified
+- ✅ Finnish content uses formal, trustworthy tone
+
 ## Performance Validation
 
 ### Load Testing

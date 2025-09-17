@@ -23,6 +23,10 @@ updated: "2025-09-17T15:30:00Z"
 author: "AI Agent + Curator Review"
 tags: ["digital-rights", "privacy", "technology-policy"]
 category: "Digital Policy"
+ui_config:
+  card_color: "purple" # purple | yellow | gray
+  priority_level: "high" # high | medium | low
+  icon: "shield" # for display in UI
 justification: "Citizens need clear digital rights protections in the modern economy"
 expected_outcomes:
   - "Stronger privacy protections for Finnish citizens"
@@ -250,20 +254,53 @@ src/data/
 
 ### Tag Taxonomy
 **File**: `src/data/metadata/tags-taxonomy.json`
-**Purpose**: Consistent tagging and search facets
+**Purpose**: Consistent tagging and search facets with design system integration
 
 ```json
 {
   "categories": {
     "technology-policy": {
       "label": "Technology Policy",
+      "label_fi": "Teknologiapolitiikka",
       "tags": ["digital-rights", "ai-governance", "data-protection"],
-      "color": "#3B82F6"
+      "color": "#5e17eb",
+      "icon": "cpu-chip"
     },
     "economic-policy": {
       "label": "Economic Policy",
+      "label_fi": "Talouspolitiikka",
       "tags": ["innovation-funding", "startup-support", "tax-policy"],
-      "color": "#10B981"
+      "color": "#ffde59",
+      "icon": "banknotes"
+    },
+    "social-policy": {
+      "label": "Social Policy",
+      "label_fi": "Sosiaalipolitiikka",
+      "tags": ["education", "healthcare", "equality"],
+      "color": "#383838",
+      "icon": "users"
+    }
+  },
+  "ui_theme": {
+    "primary_colors": {
+      "yellow": "#ffde59",
+      "purple": "#5e17eb",
+      "gray_dark": "#383838"
+    },
+    "neutral_colors": {
+      "white": "#ffffff",
+      "gray_light": "#f5f5f5",
+      "gray_medium": "#cccccc"
+    },
+    "typography": {
+      "heading_font": "Unica One",
+      "body_font": "Lato"
+    },
+    "spacing_scale": [4, 8, 16, 24, 32, 48],
+    "breakpoints": {
+      "mobile": "0-640px",
+      "tablet": "641-1024px",
+      "desktop": "1025px+"
     }
   }
 }

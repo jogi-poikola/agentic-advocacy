@@ -481,11 +481,11 @@ paths:
 
   /metadata/tags:
     get:
-      summary: Get tag taxonomy
+      summary: Get tag taxonomy with design system integration
       tags: [Metadata]
       responses:
         '200':
-          description: Tag taxonomy
+          description: Tag taxonomy with UI theme configuration
           content:
             application/json:
               schema:
@@ -498,12 +498,92 @@ paths:
                       properties:
                         label:
                           type: string
+                        label_fi:
+                          type: string
+                          description: Finnish label
                         tags:
                           type: array
                           items:
                             type: string
                         color:
                           type: string
+                          description: Hex color from design system
+                        icon:
+                          type: string
+                          description: Icon identifier for UI
+                  ui_theme:
+                    type: object
+                    properties:
+                      primary_colors:
+                        type: object
+                        properties:
+                          yellow:
+                            type: string
+                            example: "#ffde59"
+                          purple:
+                            type: string
+                            example: "#5e17eb"
+                          gray_dark:
+                            type: string
+                            example: "#383838"
+                      neutral_colors:
+                        type: object
+                        properties:
+                          white:
+                            type: string
+                          gray_light:
+                            type: string
+                          gray_medium:
+                            type: string
+                      typography:
+                        type: object
+                        properties:
+                          heading_font:
+                            type: string
+                            example: "Unica One"
+                          body_font:
+                            type: string
+                            example: "Lato"
+                      spacing_scale:
+                        type: array
+                        items:
+                          type: integer
+                        example: [4, 8, 16, 24, 32, 48]
+                      breakpoints:
+                        type: object
+                        properties:
+                          mobile:
+                            type: string
+                          tablet:
+                            type: string
+                          desktop:
+                            type: string
+
+  /metadata/design-tokens:
+    get:
+      summary: Get design system tokens for frontend consumption
+      tags: [Metadata]
+      responses:
+        '200':
+          description: Design system tokens in format suitable for Tailwind CSS
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  colors:
+                    type: object
+                    properties:
+                      primary:
+                        type: object
+                      neutral:
+                        type: object
+                  fonts:
+                    type: object
+                  spacing:
+                    type: object
+                  breakpoints:
+                    type: object
 
 components:
   securitySchemes:
@@ -578,6 +658,20 @@ components:
         content:
           type: string
           description: Markdown content
+        ui_config:
+          type: object
+          properties:
+            card_color:
+              type: string
+              enum: [purple, yellow, gray]
+              description: Display color theme
+            priority_level:
+              type: string
+              enum: [high, medium, low]
+              description: Visual priority indicator
+            icon:
+              type: string
+              description: Icon identifier for display
 
     InputDocument:
       type: object

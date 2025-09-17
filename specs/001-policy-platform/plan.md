@@ -37,6 +37,7 @@ AI-powered policy platform for Tietopolitiikka.fi enabling stakeholder input col
 ## Technical Context
 **Language/Version**: TypeScript with Next.js 14+
 **Primary Dependencies**: Next.js, Tailwind CSS, Fuse.js, Gray-matter, Anthropic Claude API, Google Drive API
+**Design System**: Tietopolitiikka.fi visual identity with accessibility-first approach
 **Storage**: Markdown files in Git repository (file-based, version controlled)
 **Testing**: Jest + React Testing Library for frontend, Node.js test runner for API routes
 **Target Platform**: Static site deployed to Vercel (free tier)
