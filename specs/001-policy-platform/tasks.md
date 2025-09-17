@@ -149,18 +149,45 @@
 
 ### Phase 3: Data Layer & Content Management
 
-**T009: Sample Data and Content [P]**
-**Path**: `src/data/positions/`, `src/data/metadata/`
-**Dependencies**: None (can run parallel with UI)
-**Parallel**: Yes (data files)
-**Objective**: Create sample positions to populate the visual interface
+**T009: Basic Claude API Setup [P]**
+**Path**: `src/lib/ai/`, environment setup
+**Dependencies**: T001 (project setup)
+**Parallel**: Yes (AI utilities)
+**Objective**: Set up Claude API for real document processing
 **Details**:
-- Create 5-10 sample position markdown files with frontmatter
-- Include variety of types: recommendation, goal, action, guideline
-- Add Finnish policy content: digital rights, climate, education
-- Set up UI metadata: card_color, priority_level, icon fields
-- Create sample tags taxonomy with design system colors
-- Generate positions-index.json for search functionality
+- Install and configure Anthropic SDK
+- Set up environment variables for Claude API key
+- Create basic AI client with error handling and retry logic
+- Create Breakdown Agent prompt template for extracting policy positions
+- Test API connection and response parsing
+- Rate limiting and cost tracking setup
+
+**T009b: Process Real Test Document - EARLY MILESTONE [P]**
+**Path**: `src/scripts/process-test-document.js`, `src/data/positions/`
+**Dependencies**: T009, T010 (markdown processing)
+**Parallel**: Yes (data generation)
+**Objective**: Process actual Tietopolitiikka.fi PDF into real policy positions
+**Details**:
+- Create script to extract text from `test-data/input-documents/62_suositusta_v2_2023_03_31.pdf`
+- Use Claude API Breakdown Agent to extract policy recommendations
+- Generate 10-15 real position markdown files with proper frontmatter
+- Include authentic Finnish policy content from the 62 recommendations
+- Set up realistic UI metadata: card_color, priority_level, icon fields
+- Create real tags taxonomy based on actual policy content
+- Generate positions-index.json with authentic search data
+- **MILESTONE**: Platform populated with real Tietopolitiikka.fi content
+
+**T009c: Sample Data Fallback [P]**
+**Path**: `src/data/positions/`, `src/data/metadata/`
+**Dependencies**: None (backup if T009b fails)
+**Parallel**: Yes (data files)
+**Objective**: Create minimal sample positions as fallback
+**Details**:
+- Create 3-5 simple sample position markdown files
+- Basic Finnish policy content: digital rights, climate, education
+- Minimal UI metadata setup
+- Simple tags taxonomy with design system colors
+- Basic positions-index.json for search functionality
 
 **T010: Markdown Processing Library [P]**
 **Path**: `src/lib/markdown/`
@@ -387,14 +414,15 @@
 
 ### Early Visual Development (After T001 completes):
 ```bash
-# These can run in parallel for immediate visual feedback:
+# These can run in parallel for immediate visual feedback + real content:
 Task T002: Design system setup
 Task T003: Component library
-Task T009: Sample data creation
+Task T009: Claude API setup
+Task T009b: Process real Tietopolitiikka.fi document (MILESTONE)
 Task T010: Markdown processing
 
 # Command example:
-claude-code tasks T002 T003 T009 T010 --parallel
+claude-code tasks T002 T003 T009 T009b T010 --parallel
 ```
 
 ### UI Development Phase:
@@ -442,12 +470,14 @@ T001 (Setup)
 ├── T002 (Tailwind + Design System)
 │   ├── T003 (Component Library)
 │   │   ├── T004 (Layout Shell)
-│   │   │   └── T005 (Homepage)
+│   │   │   └── T005 (Homepage with Real Content)
 │   │   ├── T006 (Position Cards) ── T007 (Search Results)
 │   │   └── T008 (Position Detail)
 │   │   └── T013 (Forms)
 │   └── T025 (Design Validation)
-├── T009 (Sample Data) [P]
+├── T009 (Claude API Setup) [P]
+│   ├── T009b (Process Real Document - EARLY MILESTONE) [P]
+│   └── T009c (Sample Data Fallback) [P]
 ├── T010 (Markdown Processing)
 │   ├── T011 (Static Generation)
 │   │   └── T012 (Client Search)
@@ -457,21 +487,21 @@ T001 (Setup)
 │   │   ├── T018 (Position Management)
 │   │   └── T019 (Input Review)
 ├── T015 (Upload API) [P]
-├── T020 (Claude API)
-│   └── T021 (AI Processing)
+├── T020 (Advanced Claude API) → T021 (Full AI Processing)
 └── T022, T023, T024 (Testing) [P]
 ```
 
 ## Critical Path for Visual Feedback
 
-**Priority 1 (Days 1-3): Immediate Visual**
+**Priority 1 (Days 1-3): Immediate Visual + Real Data**
 - T001 → T002 → T003 → T004 → T005
-- Parallel: T009 (sample data)
-- **Result**: Working homepage with design system
+- Parallel: T009 → T009b (real document processing) + T010 (markdown)
+- **Result**: Working homepage with design system + real Tietopolitiikka.fi content
+- **MILESTONE**: Platform populated with authentic Finnish policy positions
 
 **Priority 2 (Days 4-7): Interactive Interface**
 - T006 → T007 → T008 + T011 → T012
-- **Result**: Full browsing and search experience
+- **Result**: Full browsing and search experience with real content
 
 **Priority 3 (Days 8-14): Full Features**
 - T013-T021 (forms, API, admin, AI)
@@ -483,7 +513,8 @@ T001 (Setup)
 
 ---
 
-**Total Tasks**: 25
-**Parallel Tasks**: 15 (marked with [P])
+**Total Tasks**: 27 (added T009b, T009c for real document processing)
+**Parallel Tasks**: 17 (marked with [P])
 **Estimated Duration**: 3 weeks with parallel execution
 **Visual Feedback**: Available after Day 3 with working design system and homepage
+**Real Content Milestone**: Day 3 with authentic Tietopolitiikka.fi policy positions
