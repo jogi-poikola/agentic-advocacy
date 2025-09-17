@@ -1,6 +1,6 @@
 # Feature Specification: AI-Powered Policy Platform for Advocacy Organizations
 
-**Feature Branch**: `001-1-background-and`
+**Feature Branch**: `001-policy-platform`
 **Created**: 2025-09-17
 **Status**: Draft
 **Input**: User description: "A comprehensive platform for Tietopolitiikka.fi to revolutionize their advocacy process from manual document handling to AI-assisted policy position creation and public engagement"
@@ -8,30 +8,30 @@
 ## Execution Flow (main)
 ```
 1. Parse user description from Input
-   ’ Feature extracted: AI-assisted policy advocacy platform
+   ï¿½ Feature extracted: AI-assisted policy advocacy platform
 2. Extract key concepts from description
-   ’ Actors: volunteers/curators, stakeholders, public readers, AI agents
-   ’ Actions: input collection, position drafting, review, publication
-   ’ Data: input documents, positions, advocacy plans
-   ’ Constraints: GDPR, accessibility, volunteer resources
+   ï¿½ Actors: volunteers/curators, stakeholders, public readers, AI agents
+   ï¿½ Actions: input collection, position drafting, review, publication
+   ï¿½ Data: input documents, positions, advocacy plans
+   ï¿½ Constraints: GDPR, accessibility, volunteer resources
 3. For each unclear aspect:
-   ’ [NEEDS CLARIFICATION: authentication method for internal workspace]
-   ’ [NEEDS CLARIFICATION: specific file size limits for uploads]
-   ’ [NEEDS CLARIFICATION: data retention periods for input documents]
+   ï¿½ [NEEDS CLARIFICATION: authentication method for internal workspace]
+   ï¿½ [NEEDS CLARIFICATION: specific file size limits for uploads]
+   ï¿½ [NEEDS CLARIFICATION: data retention periods for input documents]
 4. Fill User Scenarios & Testing section
-   ’ Primary flow: stakeholder submits input ’ AI creates draft ’ curator reviews ’ published
+   ï¿½ Primary flow: stakeholder submits input ï¿½ AI creates draft ï¿½ curator reviews ï¿½ published
 5. Generate Functional Requirements
-   ’ 15 testable requirements identified
+   ï¿½ 15 testable requirements identified
 6. Identify Key Entities
-   ’ Positions, Input Documents, Users, Advocacy Plans
+   ï¿½ Positions, Input Documents, Users, Advocacy Plans
 7. Run Review Checklist
-   ’ WARN "Spec has uncertainties marked for clarification"
+   ï¿½ WARN "Spec has uncertainties marked for clarification"
 8. Return: SUCCESS (spec ready for planning)
 ```
 
 ---
 
-## ¡ Quick Guidelines
+## ï¿½ Quick Guidelines
 -  Focus on WHAT users need and WHY
 - L Avoid HOW to implement (no tech stack, APIs, code structure)
 - =e Written for business stakeholders, not developers
@@ -93,11 +93,11 @@ Tietopolitiikka.fi volunteers want to transform their manual policy advocacy pro
 - **FR-014**: System MUST track traceability from published positions back to source input documents
 - **FR-015**: System MUST support multiple AI agent roles (Research, Evaluation, Linker, Critic, Fact Checker, Citation Adder)
 
-*Marked unclear requirements:*
-- **FR-016**: System MUST authenticate internal users via [NEEDS CLARIFICATION: auth method not specified - password, SSO, two-factor?]
-- **FR-017**: System MUST retain input documents for [NEEDS CLARIFICATION: retention period not specified]
-- **FR-018**: System MUST handle file uploads up to [NEEDS CLARIFICATION: maximum file size not specified]
-- **FR-019**: System MUST support [NEEDS CLARIFICATION: expected concurrent user load not specified]
+*Additional requirements:*
+- **FR-016**: System MUST authenticate internal users via shared password (extensible to email/password and Google SSO in future)
+- **FR-017**: System MUST retain input documents indefinitely with clear user instructions prohibiting personal information upload
+- **FR-018**: System MUST handle file uploads up to 20MB maximum size
+- **FR-019**: System MUST support 10-50 concurrent users for MVP phase
 
 ### Key Entities *(include if feature involves data)*
 - **Position**: Core policy recommendation containing title, type (goal/action/recommendation/guideline), justification, expected outcomes, dependencies, related links, and publication status
@@ -118,7 +118,7 @@ Tietopolitiikka.fi volunteers want to transform their manual policy advocacy pro
 - [x] All mandatory sections completed
 
 ### Requirement Completeness
-- [ ] No [NEEDS CLARIFICATION] markers remain
+- [x] No [NEEDS CLARIFICATION] markers remain
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Scope is clearly bounded
@@ -135,6 +135,6 @@ Tietopolitiikka.fi volunteers want to transform their manual policy advocacy pro
 - [x] User scenarios defined
 - [x] Requirements generated
 - [x] Entities identified
-- [ ] Review checklist passed (pending clarifications)
+- [x] Review checklist passed
 
 ---
