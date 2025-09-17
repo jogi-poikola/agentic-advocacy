@@ -17,7 +17,7 @@
    → ✅ Update Progress Tracking: Initial Constitution Check
 5. Execute Phase 0 → research.md
    → ✅ Research completed
-6. Execute Phase 1 → contracts, data-model.md, quickstart.md, CLAUDE.md
+6. Execute Phase 1 → contracts, data-model.md, design-system.md, quickstart.md, CLAUDE.md
    → ✅ Design artifacts generated
 7. Re-evaluate Constitution Check section
    → ✅ No new violations
@@ -62,6 +62,7 @@ specs/001-policy-platform/
 ├── plan.md              # This file (/plan command output)
 ├── research.md          # Phase 0 output (/plan command)
 ├── data-model.md        # Phase 1 output (/plan command)
+├── design-system.md     # Phase 1 output - Tietopolitiikka.fi visual identity
 ├── quickstart.md        # Phase 1 output (/plan command)
 ├── contracts/           # Phase 1 output (/plan command)
 └── tasks.md             # Phase 2 output (/tasks command - NOT created by /plan)
@@ -129,6 +130,7 @@ tests/
 
 Generated artifacts:
 - `data-model.md`: Core entities (Position, InputDocument, User, AIAgent)
+- `design-system.md`: Tietopolitiikka.fi visual identity and component library
 - `contracts/`: API schemas for file upload, position management, auth
 - `quickstart.md`: Developer setup and validation steps
 - `CLAUDE.md`: AI assistant context file
