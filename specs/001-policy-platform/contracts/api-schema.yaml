@@ -1,0 +1,707 @@
+openapi: 3.0.3
+info:
+  title: AI-Powered Policy Platform API
+  description: API for stakeholder input submission, AI processing, and position management
+  version: 1.0.0
+  contact:
+    name: Policy Platform Team
+    email: dev@tietopolitiikka.fi
+
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+  - url: https://agentic-advocacy.vercel.app/api
+    description: Production server
+
+paths:
+  # Authentication
+  /auth/login:
+    post:
+      summary: Authenticate curator with shared password
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [password]
+              properties:
+                password:
+                  type: string
+                  description: Shared curator password
+              example:
+                password: "secure-curator-password"
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    $ref: '#/components/schemas/User'
+                  expires:
+                    type: string
+                    format: date-time
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/logout:
+    post:
+      summary: Logout current user
+      tags: [Authentication]
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+
+  # Input Document Management
+  /inputs/upload:
+    post:
+      summary: Upload input document for AI processing
+      tags: [Inputs]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file, title, submitter_type]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Document file (PDF, DOCX, TXT, max 20MB)
+                title:
+                  type: string
+                  maxLength: 200
+                  description: Document title
+                submitter_type:
+                  type: string
+                  enum: [individual, organization, expert]
+                organization:
+                  type: string
+                  maxLength: 100
+                  description: Organization name (if submitter_type is organization)
+                gdpr_confirmed:
+                  type: boolean
+                  description: User confirms no personal data included
+      responses:
+        '201':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  input_id:
+                    type: string
+                  processing_started:
+                    type: boolean
+                  estimated_completion:
+                    type: string
+                    format: date-time
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '413':
+          description: File too large (>20MB)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /inputs/{input_id}:
+    get:
+      summary: Get input document details
+      tags: [Inputs]
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: input_id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^input-\d{3}$'
+      responses:
+        '200':
+          description: Input document details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputDocument'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /inputs:
+    get:
+      summary: List all input documents (curator only)
+      tags: [Inputs]
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, processing, completed, failed]
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of input documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inputs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InputDocument'
+                  total:
+                    type: integer
+                  has_more:
+                    type: boolean
+
+  # Position Management
+  /positions:
+    get:
+      summary: Get published positions (public endpoint)
+      tags: [Positions]
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [public]
+            default: public
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: tags
+          in: query
+          schema:
+            type: string
+            description: Comma-separated tags
+        - name: search
+          in: query
+          schema:
+            type: string
+            description: Search query
+      responses:
+        '200':
+          description: List of positions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  positions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Position'
+                  total:
+                    type: integer
+                  search_meta:
+                    type: object
+                    properties:
+                      query:
+                        type: string
+                      results_count:
+                        type: integer
+
+    post:
+      summary: Create new position (curator only)
+      tags: [Positions]
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePositionRequest'
+      responses:
+        '201':
+          description: Position created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  position_id:
+                    type: string
+                  position:
+                    $ref: '#/components/schemas/Position'
+
+  /positions/{position_id}:
+    get:
+      summary: Get specific position
+      tags: [Positions]
+      parameters:
+        - name: position_id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{3}$'
+      responses:
+        '200':
+          description: Position details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      summary: Update position (curator only)
+      tags: [Positions]
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: position_id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{3}$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePositionRequest'
+      responses:
+        '200':
+          description: Position updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  position:
+                    $ref: '#/components/schemas/Position'
+
+  /positions/{position_id}/status:
+    patch:
+      summary: Update position status (curator only)
+      tags: [Positions]
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: position_id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{3}$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  enum: [draft, public, unpublished]
+      responses:
+        '200':
+          description: Status updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  new_status:
+                    type: string
+
+  # AI Processing
+  /ai/process/{input_id}:
+    post:
+      summary: Trigger AI processing for input document (curator only)
+      tags: [AI Processing]
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: input_id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^input-\d{3}$'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                agents:
+                  type: array
+                  items:
+                    type: string
+                    enum: [breakdown, research, evaluation, linker, critic, fact_checker, citation_adder]
+                  default: [breakdown, research]
+      responses:
+        '202':
+          description: Processing started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  session_id:
+                    type: string
+                  estimated_completion:
+                    type: string
+                    format: date-time
+
+  /ai/status/{session_id}:
+    get:
+      summary: Get AI processing status
+      tags: [AI Processing]
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Processing status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_id:
+                    type: string
+                  status:
+                    type: string
+                    enum: [pending, processing, completed, failed]
+                  progress:
+                    type: number
+                    minimum: 0
+                    maximum: 1
+                  agents_completed:
+                    type: array
+                    items:
+                      type: string
+                  generated_positions:
+                    type: array
+                    items:
+                      type: string
+                  error_message:
+                    type: string
+
+  # Search and Metadata
+  /search:
+    get:
+      summary: Search positions and metadata
+      tags: [Search]
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 2
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 10
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        position:
+                          $ref: '#/components/schemas/Position'
+                        score:
+                          type: number
+                        highlights:
+                          type: array
+                          items:
+                            type: string
+                  total:
+                    type: integer
+                  query:
+                    type: string
+
+  /metadata/tags:
+    get:
+      summary: Get tag taxonomy
+      tags: [Metadata]
+      responses:
+        '200':
+          description: Tag taxonomy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categories:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        label:
+                          type: string
+                        tags:
+                          type: array
+                          items:
+                            type: string
+                        color:
+                          type: string
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: next-auth.session-token
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        role:
+          type: string
+          enum: [curator, stakeholder]
+        permissions:
+          type: array
+          items:
+            type: string
+
+    Position:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: '^\d{3}$'
+        title:
+          type: string
+        type:
+          type: string
+          enum: [goal, action, recommendation, guideline]
+        status:
+          type: string
+          enum: [draft, public, unpublished]
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        justification:
+          type: string
+        expected_outcomes:
+          type: array
+          items:
+            type: string
+        dependencies:
+          type: array
+          items:
+            type: object
+            properties:
+              position_id:
+                type: string
+              description:
+                type: string
+        related_positions:
+          type: array
+          items:
+            type: string
+        source_documents:
+          type: array
+          items:
+            type: string
+        content:
+          type: string
+          description: Markdown content
+
+    InputDocument:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: '^input-\d{3}$'
+        title:
+          type: string
+        submitted_at:
+          type: string
+          format: date-time
+        submitter_type:
+          type: string
+          enum: [individual, organization, expert]
+        organization:
+          type: string
+        file_size:
+          type: integer
+        file_type:
+          type: string
+        processing_status:
+          type: string
+          enum: [pending, processing, completed, failed]
+        generated_positions:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    CreatePositionRequest:
+      type: object
+      required: [title, type, justification, expected_outcomes]
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        type:
+          type: string
+          enum: [goal, action, recommendation, guideline]
+        justification:
+          type: string
+        expected_outcomes:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        content:
+          type: string
+        status:
+          type: string
+          enum: [draft, public]
+          default: draft
+
+    UpdatePositionRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        justification:
+          type: string
+        expected_outcomes:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        content:
+          type: string
+        dependencies:
+          type: array
+          items:
+            type: object
+            properties:
+              position_id:
+                type: string
+              description:
+                type: string
+        related_positions:
+          type: array
+          items:
+            type: string
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
