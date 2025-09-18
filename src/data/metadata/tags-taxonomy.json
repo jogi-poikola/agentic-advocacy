@@ -1,0 +1,92 @@
+{
+  "categories": {
+    "digitaalipolitiikka": {
+      "label": "Digitaalipolitiikka",
+      "label_fi": "Digitaalipolitiikka",
+      "tags": [
+        "digitaaliset-oikeudet",
+        "yksityisyys",
+        "lainsäädäntö"
+      ],
+      "color": "#5e17eb",
+      "icon": "shield"
+    },
+    "teknologiapolitiikka": {
+      "label": "Teknologiapolitiikka",
+      "label_fi": "Teknologiapolitiikka",
+      "tags": [
+        "tekoäly",
+        "etiikka",
+        "hallinta",
+        "valvonta"
+      ],
+      "color": "#5e17eb",
+      "icon": "cpu-chip"
+    },
+    "infrastruktuuri": {
+      "label": "Infrastruktuuri",
+      "label_fi": "Tekninen infrastruktuuri",
+      "tags": [
+        "infrastruktuuri",
+        "5g",
+        "kuituyhteydet",
+        "kyberturvallisuus"
+      ],
+      "color": "#ffde59",
+      "icon": "signal"
+    },
+    "julkishallinto": {
+      "label": "Julkishallinto",
+      "label_fi": "Julkishallinto",
+      "tags": [
+        "julkinen-sektori",
+        "digitalisaatio",
+        "palvelut",
+        "identiteetti"
+      ],
+      "color": "#ffde59",
+      "icon": "building-office"
+    },
+    "koulutus": {
+      "label": "Koulutus",
+      "label_fi": "Koulutuspolitiikka",
+      "tags": [
+        "koulutus",
+        "digitaalinen-lukutaito",
+        "opettajat",
+        "elinikäinen-oppiminen"
+      ],
+      "color": "#383838",
+      "icon": "academic-cap"
+    }
+  },
+  "ui_theme": {
+    "primary_colors": {
+      "yellow": "#ffde59",
+      "purple": "#5e17eb",
+      "gray_dark": "#383838"
+    },
+    "neutral_colors": {
+      "white": "#ffffff",
+      "gray_light": "#f5f5f5",
+      "gray_medium": "#cccccc"
+    },
+    "typography": {
+      "heading_font": "Unica One",
+      "body_font": "Lato"
+    },
+    "spacing_scale": [
+      4,
+      8,
+      16,
+      24,
+      32,
+      48
+    ],
+    "breakpoints": {
+      "mobile": "0-640px",
+      "tablet": "641-1024px",
+      "desktop": "1025px+"
+    }
+  }
+}

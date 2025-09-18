@@ -1,0 +1,90 @@
+{
+  "positions": [
+    {
+      "id": "001",
+      "title": "Digitaalisten oikeuksien lainsäädäntökehys",
+      "type": "recommendation",
+      "status": "public",
+      "tags": [
+        "digitaaliset-oikeudet",
+        "yksityisyys",
+        "lainsäädäntö"
+      ],
+      "category": "Digitaalipolitiikka",
+      "content_excerpt": "Kansalaisten digitaaliset oikeudet tarvitsevat selkeän lainsäädännöllisen perustan digitalisaation edetessä....",
+      "updated": "2025-09-17T21:56:46.873Z",
+      "related_positions": [],
+      "search_weight": 1
+    },
+    {
+      "id": "002",
+      "title": "Tekoälyn hallinta ja eettinen ohjeistus",
+      "type": "action",
+      "status": "public",
+      "tags": [
+        "tekoäly",
+        "etiikka",
+        "hallinta",
+        "valvonta"
+      ],
+      "category": "Teknologiapolitiikka",
+      "content_excerpt": "Tekoälyn nopea kehitys vaatii kansallista koordinaatiota ja eettisiä ohjeita....",
+      "updated": "2025-09-17T21:56:46.873Z",
+      "related_positions": [],
+      "search_weight": 1
+    },
+    {
+      "id": "003",
+      "title": "Kattava digitaalinen infrastruktuuri",
+      "type": "goal",
+      "status": "public",
+      "tags": [
+        "infrastruktuuri",
+        "5g",
+        "kuituyhteydet",
+        "kyberturvallisuus"
+      ],
+      "category": "Tekninen infrastruktuuri",
+      "content_excerpt": "Luotettava ja nopea verkkoinfrastruktuuri on digitaalisen yhteiskunnan perusta....",
+      "updated": "2025-09-17T21:56:46.873Z",
+      "related_positions": [],
+      "search_weight": 1
+    },
+    {
+      "id": "004",
+      "title": "Julkisen sektorin digitalisaation kiihdyttäminen",
+      "type": "action",
+      "status": "public",
+      "tags": [
+        "julkinen-sektori",
+        "digitalisaatio",
+        "palvelut",
+        "identiteetti"
+      ],
+      "category": "Julkishallinto",
+      "content_excerpt": "Kansalaisten ja yritysten asiointi viranomaisten kanssa täytyy olla sujuvaa ja digitaalista....",
+      "updated": "2025-09-17T21:56:46.873Z",
+      "related_positions": [],
+      "search_weight": 1
+    },
+    {
+      "id": "005",
+      "title": "Digitaalinen osaaminen ja koulutus",
+      "type": "recommendation",
+      "status": "public",
+      "tags": [
+        "koulutus",
+        "digitaalinen-lukutaito",
+        "opettajat",
+        "elinikäinen-oppiminen"
+      ],
+      "category": "Koulutuspolitiikka",
+      "content_excerpt": "Digitalisaation hyödyntäminen vaatii kaikkien kansalaisten osaamisen kehittämistä....",
+      "updated": "2025-09-17T21:56:46.873Z",
+      "related_positions": [],
+      "search_weight": 1
+    }
+  ],
+  "last_updated": "2025-09-17T21:56:46.874Z",
+  "total_positions": 5
+}

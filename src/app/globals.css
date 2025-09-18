@@ -1,0 +1,301 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design System Implementation */
+
+@layer base {
+  :root {
+    /* Tietopolitiikka.fi Color Palette */
+    --color-primary-yellow: #ffde59;
+    --color-primary-purple: #5e17eb;
+    --color-primary-gray-dark: #383838;
+
+    --color-neutral-white: #ffffff;
+    --color-neutral-gray-light: #f5f5f5;
+    --color-neutral-gray-medium: #cccccc;
+
+    /* Typography */
+    --font-heading: 'Unica One', var(--font-unica-one), Impact, 'Arial Black', sans-serif;
+    --font-body: 'Lato', var(--font-lato), Arial, sans-serif;
+
+    /* Spacing Scale */
+    --spacing-1: 0.25rem;  /* 4px */
+    --spacing-2: 0.5rem;   /* 8px */
+    --spacing-3: 1rem;     /* 16px */
+    --spacing-4: 1.5rem;   /* 24px */
+    --spacing-5: 2rem;     /* 32px */
+    --spacing-6: 3rem;     /* 48px */
+
+    /* Border Radius */
+    --radius-sm: 0.25rem;  /* 4px */
+    --radius-md: 0.5rem;   /* 8px */
+    --radius-lg: 0.75rem;  /* 12px */
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+
+  /* Heading styles */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  /* Focus styles for accessibility */
+  *:focus {
+    outline: 2px solid var(--color-primary-purple);
+    outline-offset: 2px;
+  }
+
+  /* Skip link for accessibility */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--color-primary-purple);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    z-index: 1000;
+  }
+
+  .skip-link:focus {
+    top: 6px;
+  }
+}
+
+@layer components {
+  /* Button Components */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md;
+    @apply bg-primary-purple text-neutral-white hover:bg-purple-700;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-purple focus:ring-offset-2;
+    @apply transition-colors duration-200 ease-in-out;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md;
+    @apply bg-primary-yellow text-neutral-gray-dark hover:bg-yellow-400;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-yellow focus:ring-offset-2;
+    @apply transition-colors duration-200 ease-in-out;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md;
+    @apply text-neutral-gray-dark hover:bg-neutral-gray-light;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-purple focus:ring-offset-2;
+    @apply transition-colors duration-200 ease-in-out;
+  }
+
+  /* Input Components */
+  .input-field {
+    @apply w-full px-3 py-2 text-sm border border-neutral-gray-medium rounded-md;
+    @apply bg-neutral-white text-neutral-gray-dark placeholder-neutral-gray-medium;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-purple focus:border-transparent;
+    @apply transition-colors duration-200 ease-in-out;
+  }
+
+  .search-input {
+    @apply input-field pl-10;
+  }
+
+  /* Card Components */
+  .position-card {
+    @apply bg-neutral-white rounded-lg border border-neutral-gray-light;
+    @apply p-6 hover:shadow-md transition-shadow duration-200;
+    @apply cursor-pointer;
+  }
+
+  .position-card:hover {
+    transform: translateY(-1px);
+  }
+
+  .position-card-purple {
+    @apply position-card border-l-4 border-l-primary-purple;
+  }
+
+  .position-card-yellow {
+    @apply position-card border-l-4 border-l-primary-yellow;
+  }
+
+  .position-card-gray {
+    @apply position-card border-l-4 border-l-neutral-gray-medium;
+  }
+
+  /* Tag Components */
+  .tag {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .tag-purple {
+    @apply tag bg-purple-100 text-purple-800;
+  }
+
+  .tag-yellow {
+    @apply tag bg-yellow-100 text-yellow-800;
+  }
+
+  .tag-gray {
+    @apply tag bg-gray-100 text-gray-800;
+  }
+
+  /* Search Components */
+  .search-container {
+    @apply relative max-w-2xl mx-auto;
+  }
+
+  .search-icon {
+    @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-gray-medium;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* Navigation Components */
+  .nav-link {
+    @apply text-neutral-gray-dark hover:text-primary-purple transition-colors duration-200;
+  }
+
+  .nav-link-active {
+    @apply nav-link text-primary-purple font-medium;
+  }
+
+  /* Content Typography */
+  .prose-content {
+    @apply text-neutral-gray-dark leading-relaxed;
+  }
+
+  .prose-content h2 {
+    @apply text-xl font-heading text-neutral-gray-dark mt-8 mb-4 first:mt-0;
+  }
+
+  .prose-content h3 {
+    @apply text-lg font-heading text-neutral-gray-dark mt-6 mb-3;
+  }
+
+  .prose-content p {
+    @apply mb-4;
+  }
+
+  .prose-content ul {
+    @apply mb-4 pl-6 space-y-2;
+  }
+
+  .prose-content li {
+    @apply relative;
+  }
+
+  .prose-content li::before {
+    content: "•";
+    @apply absolute -left-4 text-primary-purple font-bold;
+  }
+
+  /* Loading States */
+  .loading-shimmer {
+    @apply animate-pulse bg-neutral-gray-light rounded;
+  }
+
+  .loading-card {
+    @apply position-card;
+  }
+
+  .loading-card .title {
+    @apply loading-shimmer h-6 w-3/4 mb-3;
+  }
+
+  .loading-card .content {
+    @apply loading-shimmer h-4 w-full mb-2;
+  }
+
+  .loading-card .tags {
+    @apply loading-shimmer h-4 w-1/2;
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 640px) {
+    .position-card {
+      @apply p-4;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-ghost {
+      @apply text-xs px-3 py-1.5;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .position-card {
+      @apply border-2;
+    }
+
+    .btn-primary {
+      @apply border-2 border-neutral-gray-dark;
+    }
+
+    .btn-secondary {
+      @apply border-2 border-neutral-gray-dark;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Custom spacing utilities */
+  .space-y-3 > * + * {
+    margin-top: var(--spacing-3);
+  }
+
+  .space-y-4 > * + * {
+    margin-top: var(--spacing-4);
+  }
+
+  .space-y-6 > * + * {
+    margin-top: var(--spacing-6);
+  }
+
+  /* Container utilities */
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Finnish language specific */
+  .lang-fi {
+    hyphens: auto;
+    word-break: break-word;
+  }
+}

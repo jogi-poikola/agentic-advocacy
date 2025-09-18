@@ -1,0 +1,47 @@
+{
+  "name": "agentic-advocacy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest",
+    "type-check": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jogi-poikola/agentic-advocacy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jogi-poikola/agentic-advocacy/issues"
+  },
+  "homepage": "https://github.com/jogi-poikola/agentic-advocacy#readme",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.63.0",
+    "@next/font": "^14.2.15",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/node": "^24.5.1",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "autoprefixer": "^10.4.21",
+    "clsx": "^2.1.1",
+    "fuse.js": "^7.1.0",
+    "gray-matter": "^4.0.3",
+    "next": "^15.5.3",
+    "next-auth": "^4.24.11",
+    "postcss": "^8.5.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.2"
+  }
+}
