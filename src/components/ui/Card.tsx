@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { cN } from '@/lib/utils';
 
@@ -6,6 +8,7 @@ interface CardProps {
   className?: string;
   priority?: 'high' | 'medium' | 'low';
   hover?: boolean;
+  onClick?: () => void;
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -13,6 +16,7 @@ export const Card: React.FC<CardProps> = ({
   className,
   priority,
   hover = true,
+  onClick,
   ...props
 }) => {
   const priorityClasses = {
@@ -27,8 +31,10 @@ export const Card: React.FC<CardProps> = ({
         'position-card',
         priority && priorityClasses[priority],
         hover && 'hover:shadow-lg hover:-translate-y-1',
+        onClick && 'cursor-pointer',
         className
       )}
+      onClick={onClick}
       {...props}
     >
       {children}

@@ -1,5 +1,4 @@
-import { SearchInput } from '@/components/ui/SearchInput';
-import { Button } from '@/components/ui/Button';
+import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
 import { Tag } from '@/components/ui/Tag';
 import { loadPublishedPositions } from '@/lib/markdown';
@@ -26,16 +25,35 @@ export default async function HomePage() {
 
             {/* Search Interface */}
             <div className="max-w-2xl mx-auto mb-8">
-              <SearchInput
-                placeholder="Hae suosituksia, aiheita tai avainsanoja..."
-                className="w-full text-base py-3"
-              />
+              <form action="/search" method="get" className="search-container">
+                <svg
+                  className="search-icon"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <input
+                  name="q"
+                  type="search"
+                  className="search-input w-full text-base py-3"
+                  placeholder="Hae suosituksia, aiheita tai avainsanoja..."
+                  aria-label="Hakukenttä"
+                />
+              </form>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="primary" size="lg">
+              <Link href="/search" className="btn-primary btn-lg">
                 Selaa kaikkia suosituksia
-              </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -87,10 +105,10 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {recentPositions.map((position) => (
-              <Card
-                key={position.metadata.id}
-                className={`position-card-${position.metadata.ui_config?.card_color || 'gray'} h-full`}
-              >
+              <Link key={position.metadata.id} href={`/position/${position.metadata.id}`}>
+                <Card
+                  className={`position-card-${position.metadata.ui_config?.card_color || 'gray'} h-full cursor-pointer hover:shadow-lg transition-shadow`}
+                >
                 <div className="flex items-start justify-between mb-3">
                   <span className={`tag-${position.metadata.ui_config?.card_color || 'gray'}`}>
                     {position.metadata.type === 'recommendation' && 'Suositus'}
@@ -156,14 +174,15 @@ export default async function HomePage() {
                 <div className="text-xs text-neutral-gray-medium">
                   {position.metadata.category}
                 </div>
-              </Card>
+                </Card>
+              </Link>
             ))}
           </div>
 
           <div className="text-center">
-            <Button variant="primary">
+            <Link href="/search" className="btn-primary">
               Näytä kaikki suositukset
-            </Button>
+            </Link>
           </div>
         </div>
       </section>
