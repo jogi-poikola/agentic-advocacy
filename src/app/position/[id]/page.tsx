@@ -6,14 +6,23 @@ import { loadPosition, loadPublishedPositions } from '@/lib/markdown';
 import { getTypeDisplayName } from '@/lib/search';
 import { parseMarkdown } from '@/lib/pages';
 
+// Generate static params for all positions
+export async function generateStaticParams() {
+  const positions = await loadPublishedPositions();
+  return positions.map((position) => ({
+    id: position.metadata.id,
+  }));
+}
+
 interface PositionPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function PositionPage({ params }: PositionPageProps) {
-  const position = loadPosition(params.id);
+  const { id } = await params;
+  const position = await loadPosition(id);
 
   if (!position || position.metadata.status !== 'public') {
     notFound();
@@ -39,13 +48,9 @@ export default async function PositionPage({ params }: PositionPageProps) {
 
         {/* Back Navigation */}
         <div className="mb-6">
-          <Button
-            variant="secondary"
-            onClick={() => window.history.back()}
-            className="flex items-center"
-          >
+          <a href="/search" className="btn-secondary flex items-center inline-block">
             ← Takaisin
-          </Button>
+          </a>
         </div>
 
         {/* Position Header */}
@@ -226,11 +231,10 @@ export default async function PositionPage({ params }: PositionPageProps) {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedPositions.map((relatedPosition) => (
-                <Card
-                  key={relatedPosition.metadata.id}
-                  className={`position-card-${relatedPosition.metadata.ui_config?.card_color || 'gray'} h-full cursor-pointer hover:shadow-lg transition-shadow`}
-                  onClick={() => window.location.href = `/position/${relatedPosition.metadata.id}`}
-                >
+                <a key={relatedPosition.metadata.id} href={`/position/${relatedPosition.metadata.id}`}>
+                  <Card
+                    className={`position-card-${relatedPosition.metadata.ui_config?.card_color || 'gray'} h-full cursor-pointer hover:shadow-lg transition-shadow`}
+                  >
                   <div className="flex items-start justify-between mb-3">
                     <span className={`tag-${relatedPosition.metadata.ui_config?.card_color || 'gray'}`}>
                       {getTypeDisplayName(relatedPosition.metadata.type)}
@@ -260,7 +264,8 @@ export default async function PositionPage({ params }: PositionPageProps) {
                   <div className="text-xs text-neutral-gray-medium">
                     {relatedPosition.metadata.category}
                   </div>
-                </Card>
+                  </Card>
+                </a>
               ))}
             </div>
           </div>
@@ -268,12 +273,12 @@ export default async function PositionPage({ params }: PositionPageProps) {
 
         {/* Actions */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button variant="primary" onClick={() => window.location.href = '/search'}>
+          <a href="/search" className="btn-primary">
             Selaa lisää suosituksia
-          </Button>
-          <Button variant="secondary" onClick={() => window.location.href = '/'}>
+          </a>
+          <a href="/" className="btn-secondary">
             Takaisin etusivulle
-          </Button>
+          </a>
         </div>
 
       </div>

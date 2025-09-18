@@ -135,9 +135,9 @@ export interface SearchIndexEntry {
   search_weight: number;
 }
 
-export function generateSearchIndex(): void {
+export async function generateSearchIndex(): Promise<void> {
   try {
-    const positions = loadPublishedPositions();
+    const positions = await loadPublishedPositions();
 
     const indexEntries: SearchIndexEntry[] = positions.map(position => ({
       id: position.metadata.id,

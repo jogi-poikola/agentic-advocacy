@@ -6,9 +6,9 @@ import { Card } from '@/components/ui/Card';
 import { PositionCard } from '@/components/ui/PositionCard';
 
 interface PositionPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // Generate static params for all positions
@@ -20,7 +20,8 @@ export async function generateStaticParams() {
 }
 
 export default async function PositionPage({ params }: PositionPageProps) {
-  const position = await loadPosition(params.id);
+  const { id } = await params;
+  const position = await loadPosition(id);
 
   if (!position) {
     notFound();
@@ -309,7 +310,7 @@ export default async function PositionPage({ params }: PositionPageProps) {
                 <Button variant="secondary" className="w-full">
                   Lataa PDF
                 </Button>
-                <Button variant="ghost" className="w-full">
+                <Button variant="secondary" className="w-full">
                   Lisää kommentti
                 </Button>
               </div>
@@ -361,13 +362,14 @@ export default async function PositionPage({ params }: PositionPageProps) {
                 <div className="space-y-4">
                   {relatedPositions.map((relatedPosition) => (
                     <div key={relatedPosition.metadata.id}>
-                      <PositionCard
-                        position={relatedPosition}
-                        showDescription={false}
-                        showTags={false}
-                        className="p-4"
-                        onClick={() => window.location.href = `/positions/${relatedPosition.metadata.id}`}
-                      />
+                      <a href={`/positions/${relatedPosition.metadata.id}`}>
+                        <PositionCard
+                          position={relatedPosition}
+                          showDescription={false}
+                          showTags={false}
+                          className="p-4"
+                        />
+                      </a>
                     </div>
                   ))}
                 </div>
@@ -378,9 +380,9 @@ export default async function PositionPage({ params }: PositionPageProps) {
 
         {/* Back to Positions */}
         <div className="mt-8 text-center">
-          <Button variant="ghost" onClick={() => window.history.back()}>
+          <a href="/positions" className="btn-secondary">
             ← Takaisin
-          </Button>
+          </a>
         </div>
       </div>
     </div>
